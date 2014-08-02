@@ -15,12 +15,20 @@ package org.activiti.rest.service.api.repository;
 
 import java.io.ByteArrayInputStream;
 
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamReader;
+
+import org.activiti.bpmn.converter.BpmnXMLConverter;
+import org.activiti.bpmn.model.BpmnModel;
+import org.activiti.editor.language.json.converter.BpmnJsonConverter;
+import org.activiti.engine.ActivitiException;
 import org.activiti.engine.ActivitiObjectNotFoundException;
 import org.activiti.engine.repository.Model;
 import org.activiti.rest.common.api.ActivitiUtil;
 import org.restlet.data.MediaType;
 import org.restlet.representation.InputRepresentation;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  * @author Frederik Heremans
@@ -38,7 +46,18 @@ public class ModelSourceResource extends BaseModelSourceResource {
   
   @Override
   protected void setModelSource(Model model, byte[] byteArray) {
-    ActivitiUtil.getRepositoryService().addModelEditorSource(model.getId(), byteArray);
+    XMLInputFactory xif = XMLInputFactory.newInstance();
+    byte[] modelBytes = null;
+    try {
+      XMLStreamReader xtr = xif.createXMLStreamReader(new ByteArrayInputStream(byteArray));
+      BpmnModel bpmnModel = new BpmnXMLConverter().convertToBpmnModel(xtr);
+      BpmnJsonConverter converter = new BpmnJsonConverter();
+      ObjectNode modelNode = converter.convertToJson(bpmnModel);
+      modelBytes = modelNode.toString().getBytes("utf-8");
+    } catch(Exception e) {
+      throw new ActivitiException("Error converting BPMN source to JSON: " + e.getMessage(), e);
+    }
+    ActivitiUtil.getRepositoryService().addModelEditorSource(model.getId(), modelBytes);
   }
   
 }
