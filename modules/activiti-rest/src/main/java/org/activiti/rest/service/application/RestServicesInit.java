@@ -66,8 +66,10 @@ import org.activiti.rest.service.api.legacy.management.LegacyTableResource;
 import org.activiti.rest.service.api.legacy.management.TablesResource;
 import org.activiti.rest.service.api.legacy.process.LegacyProcessInstanceResource;
 import org.activiti.rest.service.api.legacy.process.LegacyProcessInstancesResource;
+import org.activiti.rest.service.api.legacy.process.ProcessDefinitionBPMNResource;
 import org.activiti.rest.service.api.legacy.process.ProcessDefinitionDiagramResource;
 import org.activiti.rest.service.api.legacy.process.ProcessDefinitionFormResource;
+import org.activiti.rest.service.api.legacy.process.ProcessDefinitionTasksResource;
 import org.activiti.rest.service.api.legacy.process.ProcessDefinitionsResource;
 import org.activiti.rest.service.api.legacy.process.ProcessInstanceDiagramResource;
 import org.activiti.rest.service.api.legacy.process.ProcessInstanceSignalExecutionResource;
@@ -269,9 +271,11 @@ public class RestServicesInit {
     router.attach("/process-instance/{processInstanceId}/signal", ProcessInstanceSignalExecutionResource.class);
     router.attach("/process-instance/{processInstanceId}/event/{signalName}", SignalEventSubscriptionResource.class);
     router.attach("/process-definition/{processDefinitionId}/form", ProcessDefinitionFormResource.class);
+    router.attach("/process-definition/{processDefinitionId}/bpmn", ProcessDefinitionBPMNResource.class);
     router.attach("/process-definition/{processDefinitionId}/diagram", ProcessDefinitionDiagramResource.class);
     router.attach("/process-definition/{processDefinitionId}/properties", ProcessDefinitionPropertiesResource.class);
-    
+    router.attach("/process-definition/{processDefinitionId}/tasks", ProcessDefinitionTasksResource.class);
+
     router.attach("/tasks", TasksResource.class);
     router.attach("/tasks-summary", TasksSummaryResource.class);
     router.attach("/task", TaskAddResource.class);
