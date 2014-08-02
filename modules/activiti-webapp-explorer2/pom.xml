@@ -235,5 +235,11 @@
       <version>0.10.0</version>
     </dependency>
 
+    <!-- Tangram -->
+    <dependency>
+      <groupId>es.tangrambpm.activiti</groupId>
+      <artifactId>tangram-addons</artifactId>
+    </dependency>
+
   </dependencies>
 </project>

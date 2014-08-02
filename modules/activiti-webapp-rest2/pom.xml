@@ -151,5 +151,10 @@
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
     </dependency>
+    <!-- Tangram -->
+    <dependency>
+      <groupId>es.tangrambpm.activiti</groupId>
+      <artifactId>tangram-addons</artifactId>
+    </dependency>
   </dependencies>
 </project>
