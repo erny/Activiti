@@ -41,6 +41,7 @@ public class TasksResource extends SecuredResource {
     properties.put("assignee", TaskQueryProperty.ASSIGNEE);
     properties.put("executionId", TaskQueryProperty.EXECUTION_ID);
     properties.put("processInstanceId", TaskQueryProperty.PROCESS_INSTANCE_ID);
+    properties.put("createTime", TaskQueryProperty.CREATE_TIME);
   }
   
   @Get("json")
@@ -60,7 +61,9 @@ public class TasksResource extends SecuredResource {
     String strDueDate = getQuery().getValues("dueDate");
     String strMinDueDate = getQuery().getValues("minDueDate");
     String strMaxDueDate = getQuery().getValues("maxDueDate");
-    
+
+    String processInstanceId = getQuery().getValues("processInstanceId");
+
     TaskQuery taskQuery = ActivitiUtil.getTaskService().createTaskQuery();
     if (personalTaskUserId != null) {
       taskQuery.taskAssignee(personalTaskUserId);
@@ -91,7 +94,11 @@ public class TasksResource extends SecuredResource {
     } else if (strMaxDueDate != null) {
       taskQuery.dueBefore(RequestUtil.parseToDate(strMaxDueDate));
     }
-    
+
+    if (processInstanceId != null) {
+        taskQuery.processInstanceId(processInstanceId);
+    }
+
     DataResponse dataResponse = new LegacyTasksPaginateList().paginateList(getQuery(), taskQuery, "id", properties);
     return dataResponse;
   }
