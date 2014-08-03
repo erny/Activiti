@@ -237,8 +237,11 @@ public class EditorProcessDefinitionDetailPanel extends DetailPanel {
             byte[] bpmnBytes = null;
             String filename = null;
             if (SimpleTableEditorConstants.TABLE_EDITOR_CATEGORY.equals(modelData.getCategory())) {
+              byte[] editorSource = repositoryService.getModelEditorSource(modelData.getId());
+              String s = new String(editorSource);
+              LOGGER.info(s);
               WorkflowDefinition workflowDefinition = ExplorerApp.get().getSimpleWorkflowJsonConverter()
-              		.readWorkflowDefinition(repositoryService.getModelEditorSource(modelData.getId()));
+              		.readWorkflowDefinition(editorSource);
               
               filename = workflowDefinition.getName();
               WorkflowDefinitionConversion conversion = 
@@ -293,7 +296,9 @@ public class EditorProcessDefinitionDetailPanel extends DetailPanel {
       private static final long serialVersionUID = 1L;
 
       public void buttonClick(ClickEvent event) {
-        
+        String s = new String(model);
+        LOGGER.info(s);
+
         // Convert to simple workflow definition
       	WorkflowDefinition workflowDefinition = ExplorerApp.get().getSimpleWorkflowJsonConverter()
       			.readWorkflowDefinition(model);

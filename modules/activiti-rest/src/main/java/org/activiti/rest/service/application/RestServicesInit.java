@@ -94,6 +94,7 @@ import org.activiti.rest.service.api.repository.DeploymentResourceResource;
 import org.activiti.rest.service.api.repository.ModelCollectionResource;
 import org.activiti.rest.service.api.repository.ModelResource;
 import org.activiti.rest.service.api.repository.ModelSourceExtraResource;
+import org.activiti.rest.service.api.repository.ModelDeployResource;
 import org.activiti.rest.service.api.repository.ModelSourceResource;
 import org.activiti.rest.service.api.repository.ProcessDefinitionCollectionResource;
 import org.activiti.rest.service.api.repository.ProcessDefinitionIdentityLinkCollectionResource;
@@ -160,6 +161,7 @@ public class RestServicesInit {
     router.attach("/repository/models", ModelCollectionResource.class);
     router.attach("/repository/models/{modelId}", ModelResource.class);
     router.attach("/repository/models/{modelId}/source", ModelSourceResource.class);
+    router.attach("/repository/models/{modelId}/deploy", ModelDeployResource.class);
     router.attach("/repository/models/{modelId}/source-extra", ModelSourceExtraResource.class);
     
     router.attach("/runtime/tasks", TaskCollectionResource.class);
