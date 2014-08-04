@@ -14,16 +14,20 @@
 package org.activiti.rest.service.api.legacy;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.activiti.engine.ActivitiIllegalArgumentException;
+import org.activiti.engine.RepositoryService;
 import org.activiti.engine.impl.TaskQueryProperty;
 import org.activiti.engine.query.QueryProperty;
+import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.task.TaskQuery;
 import org.activiti.rest.common.api.ActivitiUtil;
 import org.activiti.rest.common.api.DataResponse;
 import org.activiti.rest.common.api.RequestUtil;
 import org.activiti.rest.common.api.SecuredResource;
+import org.activiti.rest.service.api.legacy.task.LegacyTaskResponse;
 import org.restlet.resource.Get;
 
 /**
@@ -98,8 +102,23 @@ public class TasksResource extends SecuredResource {
     if (processInstanceId != null) {
         taskQuery.processInstanceId(processInstanceId);
     }
-
     DataResponse dataResponse = new LegacyTasksPaginateList().paginateList(getQuery(), taskQuery, "id", properties);
+    // add processDefinition name to every task
+    @SuppressWarnings("unchecked")
+    List<LegacyTaskResponse> tasks = (List<LegacyTaskResponse>) dataResponse.getData();
+    RepositoryService repositoryService = ActivitiUtil.getRepositoryService();
+    Map <String , ProcessDefinition> processDefinitions = new HashMap<String, ProcessDefinition>();
+    for (LegacyTaskResponse taskResponse : tasks) {
+       String processDefinitionId = taskResponse.getProcessDefinitionId();
+       ProcessDefinition processDefinition = processDefinitions.get(processDefinitionId);
+       if (processDefinition == null){
+           processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(processDefinitionId).list().get(0);
+           processDefinitions.put(processDefinitionId, processDefinition);
+       }
+       String processDefinitionName = processDefinition.getName();
+       taskResponse.setProcessDefinitionName(processDefinitionName);
+    }
+
     return dataResponse;
   }
 }

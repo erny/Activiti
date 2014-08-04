@@ -41,6 +41,7 @@ public class LegacyTaskResponse {
   int priority;
   String processDefinitionId;
   String processInstanceId;
+  String processDefinitionName;
   String taskDefinitionKey;
   String formResourceKey;
   List<SubTaskResponse> subTaskList = new ArrayList<SubTaskResponse>();
@@ -166,6 +167,10 @@ public class LegacyTaskResponse {
 
   public void setProcessInstanceId(String processInstanceId) {
     this.processInstanceId = processInstanceId;
+  }
+
+  public void setProcessDefinitionName(String processDefinitionName) {
+      this.processDefinitionName = processDefinitionName;
   }
 
   public String getTaskDefinitionKey() {
