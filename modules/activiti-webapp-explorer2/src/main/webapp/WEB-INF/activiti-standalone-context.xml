@@ -14,8 +14,8 @@
     
     <!-- Set following properties to false if certain demo data is not wanted -->
     <property name="createDemoUsersAndGroups" value="true" />
-    <property name="createDemoProcessDefinitions" value="true" />
-    <property name="createDemoModels" value="true" />
+    <property name="createDemoProcessDefinitions" value="false" />
+    <property name="createDemoModels" value="false" />
     <property name="generateReportData" value="true" />
   </bean>
   

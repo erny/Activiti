@@ -10,8 +10,8 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		init-method="init">
 		<property name="processEngine" ref="processEngine" />
 		<property name="createDemoUsersAndGroups" value="true" />
-        <property name="createDemoProcessDefinitions" value="true" />
-        <property name="createDemoModels" value="true" />
+        <property name="createDemoProcessDefinitions" value="false" />
+        <property name="createDemoModels" value="false" />
 	</bean>
 
 	<bean id="dbProperties" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
