@@ -660,15 +660,19 @@ public class BpmnJsonConverter implements EditorJsonConstants, StencilConstants,
           filterAllEdges(childNode, edgeMap, sourceAndTargetMap, shapeMap, sourceRefMap);
           
         } else if (STENCIL_SEQUENCE_FLOW.equals(stencilId)) {
-          
-          String childEdgeId = BpmnJsonConverterUtil.getElementId(childNode);
-          String targetRefId = childNode.get("target").get(EDITOR_SHAPE_ID).asText();
-          List<JsonNode> sourceAndTargetList = new ArrayList<JsonNode>();
-          sourceAndTargetList.add(sourceRefMap.get(childNode.get(EDITOR_SHAPE_ID).asText()));
-          sourceAndTargetList.add(shapeMap.get(targetRefId));
-          
-          edgeMap.put(childEdgeId, childNode);
-          sourceAndTargetMap.put(childEdgeId, sourceAndTargetList);
+          try {
+            String childEdgeId = BpmnJsonConverterUtil.getElementId(childNode);
+            String targetRefId = childNode.get("target").get(EDITOR_SHAPE_ID).asText();
+            List<JsonNode> sourceAndTargetList = new ArrayList<JsonNode>();
+            sourceAndTargetList.add(sourceRefMap.get(childNode.get(EDITOR_SHAPE_ID).asText()));
+            sourceAndTargetList.add(shapeMap.get(targetRefId));
+
+            edgeMap.put(childEdgeId, childNode);
+            sourceAndTargetMap.put(childEdgeId, sourceAndTargetList);
+          } catch (NullPointerException exception) {
+            LOGGER.error("NullPointerException looping in nodes while parsing this node: " + childNode);
+            throw exception;
+          }
         }
       }
     }
