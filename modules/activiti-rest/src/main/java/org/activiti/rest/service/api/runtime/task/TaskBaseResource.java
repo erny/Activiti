@@ -238,6 +238,10 @@ public class TaskBaseResource extends SecuredResource {
     	taskQuery.processDefinitionKeyLike(request.getProcessDefinitionKeyLike());
     }
     
+    if(request.getProcessDefinitionKeyIn() != null) {
+      taskQuery.processDefinitionKeyIn(request.getProcessDefinitionKeyIn());
+    }
+
     if(request.getProcessDefinitionName() != null) {
     	taskQuery.processDefinitionName(request.getProcessDefinitionName());
     }

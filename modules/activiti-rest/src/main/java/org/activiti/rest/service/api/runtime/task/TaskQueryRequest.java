@@ -49,6 +49,7 @@ public class TaskQueryRequest extends PaginateRequest {
   private String processInstanceBusinessKey;
   private String processInstanceBusinessKeyLike;
   private String processDefinitionKey;
+  private List<String> processDefinitionKeyIn;
   private String processDefinitionName;
   private String processDefinitionKeyLike;
   private String processDefinitionNameLike;
@@ -366,6 +367,11 @@ public class TaskQueryRequest extends PaginateRequest {
   public String getProcessDefinitionKeyLike() {
 	  return processDefinitionKeyLike;
   }
+
+  public List<String> getProcessDefinitionKeyIn() {
+    return processDefinitionKeyIn;
+  }
+
   public void setProcessDefinitionKeyLike(String processDefinitionKeyLike) {
 	  this.processDefinitionKeyLike = processDefinitionKeyLike;
   }

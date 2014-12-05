@@ -138,6 +138,15 @@ public class TaskCollectionResource extends TaskBaseResource {
     if(names.contains("processDefinitionKeyLike")) {
     	request.setProcessDefinitionKeyLike(getQueryParameter("processDefinitionKeyLike", query));
     }
+
+    if(names.contains("processDefinitionKeyIn")) {
+      String[] processDefinitionKeys = getQueryParameter("processDefinitionKeyIn", query).split(",");
+      List<String> keys = new ArrayList<String>(processDefinitionKeys.length);
+      for (String key : processDefinitionKeys) {
+        keys.add(key);
+      }
+      request.setCandidateGroupIn(keys);
+    }
     
     if(names.contains("processDefinitionName")) {
     	request.setProcessDefinitionName(getQueryParameter("processDefinitionName", query));
