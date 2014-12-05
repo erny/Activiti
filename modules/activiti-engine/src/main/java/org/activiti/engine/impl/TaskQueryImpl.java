@@ -68,6 +68,7 @@ public class TaskQueryImpl extends AbstractVariableQueryImpl<TaskQuery, Task> im
   protected String keyLike;
   protected String processDefinitionKey;
   protected String processDefinitionKeyLike;
+  protected List<String> processDefinitionKeys;
   protected String processDefinitionId;
   protected String processDefinitionName;
   protected String processDefinitionNameLike;
@@ -344,7 +345,7 @@ public class TaskQueryImpl extends AbstractVariableQueryImpl<TaskQuery, Task> im
     this.key = key;
     return this;
   }
-  
+
   public TaskQuery taskDefinitionKeyLike(String keyLike) {
     this.keyLike = keyLike;
     return this;
@@ -437,6 +438,18 @@ public class TaskQueryImpl extends AbstractVariableQueryImpl<TaskQuery, Task> im
   
   public TaskQuery processDefinitionKeyLike(String processDefinitionKeyLike) {
     this.processDefinitionKeyLike = processDefinitionKeyLike;
+    return this;
+  }
+
+  public TaskQuery processDefinitionKeyIn(List<String> processDefinitionKeys) {
+    if(processDefinitionKeys == null) {
+      throw new ActivitiIllegalArgumentException("Definition Keys list is null");
+    }
+    if(processDefinitionKeys.size()== 0) {
+      throw new ActivitiIllegalArgumentException("Definition Keys list is empty");
+    }
+        
+    this.processDefinitionKeys = processDefinitionKeys;
     return this;
   }
 

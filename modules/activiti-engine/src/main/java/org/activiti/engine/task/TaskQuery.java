@@ -348,7 +348,13 @@ public interface TaskQuery extends Query<TaskQuery, Task>{
    * The syntax that should be used is the same as in SQL, eg. %activiti%.
    */
   TaskQuery processDefinitionKeyLike(String processDefinitionKeyLike);
-  
+
+  /**
+   * Only select tasks which are part of a process instance which has a
+   * process definition key in one of the given values.
+   */
+  TaskQuery processDefinitionKeyIn(List<String> processDefinitionKeys);
+
   /**
    * Only select tasks which are part of a process instance which has the given
    * process definition id.
