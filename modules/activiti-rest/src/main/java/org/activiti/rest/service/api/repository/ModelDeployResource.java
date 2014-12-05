@@ -13,6 +13,11 @@
 
 package org.activiti.rest.service.api.repository;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.editor.language.json.converter.BpmnJsonConverter;
@@ -46,11 +51,12 @@ public class ModelDeployResource extends BaseModelResource {
     Model model = getModelFromRequest();
     SimpleWorkflowJsonConverter jsonConverter = new SimpleWorkflowJsonConverter();
     RepositoryService repositoryService = ActivitiUtil.getRepositoryService();
+    byte[] bpmnBytes = null;
     try {
       byte[] editorSource = repositoryService.getModelEditorSource(model.getId());
       ObjectNode modelNode = (ObjectNode) new ObjectMapper().readTree(editorSource);
       BpmnModel bpmnModel = new BpmnJsonConverter().convertToBpmnModel(modelNode);
-      byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(bpmnModel);
+      bpmnBytes = new BpmnXMLConverter().convertToXML(bpmnModel);
 
       String processName = model.getName() + ".bpmn20.xml";
       Deployment deployment = repositoryService.createDeployment()
@@ -63,7 +69,15 @@ public class ModelDeployResource extends BaseModelResource {
       return new ModelDeployResourceResponse(processDefinition.getId());
     } catch(Exception e) {
       logger.error("failed to export model to BPMN XML", e);
-      throw new ActivitiException("Error exporting model to BPMN XML: " + e.getMessage(), e);
+      try {
+          File temp = File.createTempFile("bpmn_deployed_with_error", ".xml"); 
+          BufferedWriter bw = new BufferedWriter(new FileWriter(temp));
+          bw.write(new String(bpmnBytes));
+          bw.close();
+          throw new ActivitiException("Error exporting model to BPMN XML (see /tmp/bpmn_deployed_with_error.xml): " + e.getMessage(), e);
+      } catch(IOException e2) {
+          throw new ActivitiException("IOException writing the error log:" + e2.getMessage(), e2);
+      }
     }
   }
 
