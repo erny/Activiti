@@ -445,9 +445,6 @@ public class TaskQueryImpl extends AbstractVariableQueryImpl<TaskQuery, Task> im
     if(processDefinitionKeys == null) {
       throw new ActivitiIllegalArgumentException("Definition Keys list is null");
     }
-    if(processDefinitionKeys.size()== 0) {
-      throw new ActivitiIllegalArgumentException("Definition Keys list is empty");
-    }
         
     this.processDefinitionKeys = processDefinitionKeys;
     return this;

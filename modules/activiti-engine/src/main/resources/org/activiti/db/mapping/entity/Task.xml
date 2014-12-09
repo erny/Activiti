@@ -294,7 +294,7 @@
         </otherwise>
       </choose>       
     </foreach>
-    <if test="processDefinitionKey != null || processDefinitionKeyLike != null || processDefinitionName != null || processDefinitionNameLike != null">
+    <if test="processDefinitionKey != null || processDefinitionKeyLike != null || processDefinitionName != null || processDefinitionNameLike != null || processDefinitionKeys != null">
       inner join ${prefix}ACT_RE_PROCDEF D on RES.PROC_DEF_ID_ = D.ID_
     </if>
     <if test="processInstanceBusinessKey != null || processInstanceBusinessKeyLike != null">
@@ -381,6 +381,13 @@
       </if>
       <if test="processDefinitionKeyLike != null">
         and D.KEY_ like #{processDefinitionKeyLike}
+      </if>
+      <if test="processDefinitionKeys != null &amp;&amp; processDefinitionKeys.size() &gt; 0">
+        and D.KEY_ IN
+        <foreach item="key" index="index" collection="processDefinitionKeys" 
+                 open="(" separator="," close=")">
+          #{key}
+        </foreach>
       </if>
       <if test="processDefinitionName != null">
         and D.NAME_ = #{processDefinitionName}
