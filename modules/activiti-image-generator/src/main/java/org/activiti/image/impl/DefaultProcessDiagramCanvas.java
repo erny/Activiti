@@ -699,8 +699,12 @@ public class DefaultProcessDiagramCanvas {
       int boxHeight = height - 16 - ICON_PADDING - ICON_PADDING - MARKER_WIDTH - 2 - 2;
       int boxX = x + width/2 - boxWidth/2;
       int boxY = y + height/2 - boxHeight/2 + ICON_PADDING + ICON_PADDING - 2 - 2;
-      
-      drawMultilineCentredText(name, boxX, boxY, boxWidth, boxHeight);
+      try {
+        drawMultilineCentredText(name, boxX, boxY, boxWidth, boxHeight);
+      } catch (RuntimeException e) { // if anything goes wrong, we don't store the image (the process will still be executable).
+        LOGGER.warn("Error drawing Task " + name);
+        throw e;
+      }
     }
   }
   
