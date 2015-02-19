@@ -215,6 +215,11 @@
       <artifactId>postgresql</artifactId>
       <version>9.1-901-1.jdbc4</version>
     </dependency>
+    <!-- Tangram -->
+    <dependency>
+      <groupId>es.tangrambpm.activiti</groupId>
+      <artifactId>tangram-addons</artifactId>
+    </dependency>
   </dependencies>
 
   <profiles>

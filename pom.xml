@@ -266,6 +266,12 @@
         <artifactId>activiti-image-generator</artifactId>
         <version>${project.version}</version>
       </dependency>
+      <!-- Tangram -->
+      <dependency>
+        <groupId>es.tangrambpm.activiti</groupId>
+        <artifactId>tangram-addons</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <!-- EMAIL -->
       <dependency>
         <groupId>org.apache.commons</groupId>
