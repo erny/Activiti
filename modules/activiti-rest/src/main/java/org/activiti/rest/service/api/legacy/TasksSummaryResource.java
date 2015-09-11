@@ -69,6 +69,7 @@ public class TasksSummaryResource extends SecuredResource {
       if(names.contains("processDefinitionKeyIn")) {
         taskQuery.processDefinitionKeyIn(processDefKeys);
       }
+      taskQuery.active(); // only count not suspended tasks
       long tasksInGroup = taskQuery.taskCandidateGroup(group.getId()).count();
       groupsJSON.put(group.getName(), tasksInGroup);
     }
@@ -76,7 +77,7 @@ public class TasksSummaryResource extends SecuredResource {
     ObjectNode summaryResponseJSON = new ObjectMapper().createObjectNode();
     
     ObjectNode totalAssignedJSON = new ObjectMapper().createObjectNode();
-    totalAssignedJSON.put("total", ts.createTaskQuery().taskAssignee(user).count());
+    totalAssignedJSON.put("total", ts.createTaskQuery().taskAssignee(user).active().count());
     summaryResponseJSON.put("assigned", totalAssignedJSON);
     
     ObjectNode totalUnassignedJSON = new ObjectMapper().createObjectNode();
