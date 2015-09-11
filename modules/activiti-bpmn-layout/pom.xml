@@ -10,7 +10,7 @@
     <groupId>org.activiti</groupId>
     <artifactId>activiti-root</artifactId>
     <relativePath>../..</relativePath>
-    <version>5.17-TANGRAM</version>
+    <version>5.17-TANGRAM-3</version>
   </parent>
 
   <build>
