@@ -4,7 +4,8 @@ To build a new release:
 
 * Change all the ``5.17-TANGRAM-X`` ocurrences in the pom.xml files from all modules to the new version. For example:
 
-   $ find . -name pom.xml -exec rpl 5.17-TANGRAM-3 5.17-TANGRAM-4 {} \; -print
+   $ find . -name pom.xml -exec rpl 5.17-TANGRAM-4 5.17-TANGRAM-5 {} \; -print
+   $ find . -name build.xml -exec rpl 5.17-TANGRAM-4 5.17-TANGRAM-5 {} \; -print
 
 * Install the ``tangram-addons`` package:
 
