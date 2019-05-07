@@ -82,7 +82,7 @@
       </dependency>
       <dependency>
         <groupId>org.apache.tomcat</groupId>
-        <artifactId>tomcat-juli</artifactId>
+        <artifactId>tomcat-jdbc</artifactId>
         <version>7.0.94</version>
       </dependency>
       <!-- Logging -->
