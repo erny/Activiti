@@ -1,4 +1,4 @@
-package es.tangrambpm.activiti.servicetasks;
+package es.nextbpm.activiti.servicetasks;
 
 import org.activiti.engine.delegate.Expression;
 
